@@ -41,10 +41,10 @@ So, I'd be a little bit cautious not to use this UDF on large or multiple cell r
 
 ### 3.2.Rank - optional - default=1
 The UDF could be called minimally as =freqByRank(B2:F16) and it will return the value(s) within the said range which has the highest occurences(frequencies).\
-Above is true for uni-modal datasets but for multi-modal data sets, it should be called as an array formula with Ctrl+Alt+Enter resulting in something like {=freqByRank(B2:F16)}.\
+Above is true for uni-modal datasets but for multi-modal data sets, it should be called as an array formula with Ctrl+Shift+Enter resulting in something like {=freqByRank(B2:F16)}.\
 So the question is how do we know if the dataset is uni/multi-modal?\
 Simple, we don't!, untill we actually call the UDF.\
-On Office365, which has spill feature, there is no need for Ctrl+Alt+Enter as entering normally like =freqByRank(B2:F16) alone is enough and it will return an array to the right of the formula cell if there are more than one cell with the same frequency, automagically.\
+On Office365, which has spill feature, there is no need for Ctrl+Shift+Enter as entering normally like =freqByRank(B2:F16) alone is enough and it will return an array to the right of the formula cell if there are more than one cell with the same frequency, automagically.\
 However, on older Excel versions, users can still select a number of columns to the RIGHT of the formula cell and enter like =freqByRank(B2:F16,2) and enter as an array formula to see how many non-#N/A values are returned to check how many cells to select to be included into the array. The number 2 in this example asks the UDF to return the value(s) with the second highest frequency.
 
 The second argument represents the Rank in that the users can ask the UDF to return the value(s) with a specific N-th ranked frequency of occurences with Rank=1 being the highest.\
