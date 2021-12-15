@@ -93,6 +93,7 @@ So, happy explorations!
 
 ## 4.The UDF Code
 ````VBA
+'important note:Tools->References->Microsoft Scripting Runtime must be checked if code were copied from GitHub
 Option Explicit
 Private Dict_Freqs As Scripting.Dictionary
 Public Function freqByRank(target As Range, _
