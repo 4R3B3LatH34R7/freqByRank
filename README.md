@@ -66,6 +66,7 @@ Another possible option for this argument is to turn it to FALSE resulting in a 
 A great thing about this feature is that now users are able to see the realtime changes made in the original dataset reflected in the extrapolated heatmap-ish region. Please refer to the following image for further references.
 ![freqByRank](/images/freqByRank_ConditionalFormat.png)
 Please note that H2:L16 must be selected while the formula in H2 was entered as an array formula with Ctrl+Shift+Enter.
+<b>NB: The same effect can be obtained with =COUNTIF($B$2:$F$16,H2) and drag right for 4 more columns and drag down 14 more rows and apply conditional formatting.</b>
 
 ### 3.5.return1s - optional - default=FALSE
 The 5th and last argument (as of 15DEC2021) is whether to return values which appear just once, in other words, with frequencies=1 or again, in other words, unique values.\
