@@ -92,7 +92,7 @@ I'm sure there are other ways to combine this UDF with Excel's default formulae 
 So, happy explorations!
 
 ## 4.The UDF Code
-````
+````VBA
 Option Explicit
 Private Dict_Freqs As Scripting.Dictionary
 Public Function freqByRank(target As Range, _
@@ -271,7 +271,7 @@ End Function
 
 ## 5.Releases
 There will be 3 types of releases:
-1. VBA code for UDF that could be copied from here
+1. [VBA code for UDF](https://github.com/4R3B3LatH34R7/freqByRank#4the-udf-code) that could be copied from here
 2. .bas module
 3. .xlsm file
 
