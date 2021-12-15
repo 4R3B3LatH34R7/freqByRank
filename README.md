@@ -15,7 +15,7 @@ Even then, I have seen some several-levels-nested and very complicated formulas 
 The Mode.MULT function can return a values with same mode from a multi-modal dataset but it is limited to work with only numeric values.\
 This UDF was made to overcome all those above shortcomings of the above builtin formulae/functions.
 
-## 2.How
+## 2.How & Why
 The logic behind this UDF is very simple, in that, the UDF takes in a range of cells first.\
 Put them into an array and then find out the count of that value inside the range, save the count in a dictionary with the frequency as the key and then replace value with vbNullString in the range.\
 Then repeat the same process with the rest of the cells in the same range if they are not vbNullStrings.\
@@ -23,8 +23,8 @@ If there are values with the same frequencies, they are appended together inside
 My original plan was assigned all the values with numerical values with corresponding keys (to get the values back) so that I can use the MODE.MULT function on the range.\
 But I was afraid that the conversion/matching processes of the whole range into numerical values might be more resource intensive so I just used a customized COUNTIF function that I can use with arrays instead of ranges as it was designed to be used.\
 The tricky part is to customize the return values. The return part code was far longer than the calculation code.\
-I even go extra lengths to create a ranking function that would rank the frequencies so that when the user ask for a specific rank of frequency, the UDF would return the right an array containing the exact rank.\
-I didn't want to sort the arrays/dictionaries so I have create a function to translate the ranks to frequencies which are actually the keys to the processed dicitonary.
+I even go extra lengths to create a ranking function that would rank the frequencies so that when the user ask for a specific rank of frequency, the UDF would return the value or if more than one value has the same frequency, an array containing the exact rank, to its right.\
+I didn't want to sort the arrays/dictionaries so I have created a function to translate the ranks to frequencies which are actually the keys to the processed dicitonary.
 
 ## 3.Parameters/Arguments
 ### 3.1.target Range - required
