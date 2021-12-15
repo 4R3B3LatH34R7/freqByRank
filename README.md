@@ -64,7 +64,7 @@ For example, let's suppose calling the UDF like =freqByRank(B2:F16,4) it will re
 The above situation is particularly true for Excel versions prior to Office365. On Excel365, the resultant array will just spill over to the right.\
 In the prior scenario, the third parameter, returnCount comes to the rescue by returning only the count instead of that 49-ish column single-row array by calling the UDF as =freqByRank(B2:F16,4,TRUE).
 
-<b>NB: <i>To prevent an array of numbers if the UDF were called with returnCount=TRUE, the UDF is now limited to return the count only if it is not called as an array formula.</i></b>
+<b>NB: <i>To prevent a 1D array of numbers if the UDF were called with ````returnCount=TRUE````, the UDF is now limited to return the count only if it is <b>NOT</b> called as an array formula.</i></b>
 
 ### 3.4.return1D - optional - default=TRUE
 The actual switch/argument for calling UDF as =freqByRank(B2:F16,0) and get the result in a single column, is the 4th argument and it could be turned on/off as =freqByRank(B2:F16,0,,TRUE/FALSE).\
@@ -91,13 +91,191 @@ After the users used freqByRank with return1D set to TRUE (which is default) wit
 I'm sure there are other ways to combine this UDF with Excel's default formulae like MATCH and use it with this UDF to check for a cell's frequency value.\
 So, happy explorations!
 
-## 4.Releases
+## 4.The UDF Code
+````
+Option Explicit
+Private Dict_Freqs As Scripting.Dictionary
+Public Function freqByRank(target As Range, _
+                    Optional rankBy As Long = 1, _
+                    Optional returnCount As Boolean = False, _
+                    Optional return1D As Boolean = True, _
+                    Optional include1s As Boolean = False) As Variant
+Dim targetArray()
+Dim rowCounter As Long, colCounter As Long
+Dim actualValue
+Dim freqCount As Long
+Dim freqArray()
+Dim DictKeyCounter As Long
+Dim oneKey
+Dim returnArray()
+Dim arrayCounter As Long
+Dim itemCounter As Long
+Dim totalItemsInDict As Long
+Dim calledAsArrayFormula As Boolean
+    If rankBy > target.Rows.Count * target.Columns.Count Then freqByRank = CVErr(xlErrValue): Exit Function
+    If target.Cells.CountLarge = 1 Then
+        If target.Value <> "" Then
+            freqByRank = 1: Exit Function
+        Else
+            freqByRank = CVErr(xlErrNA): Exit Function
+        End If
+    End If
+    
+    If TypeName(Application.Caller) = "Range" Then
+        If Application.Caller.HasArray And Application.Caller.FormulaArray <> "" Then
+            calledAsArrayFormula = True
+        Else
+            calledAsArrayFormula = False
+        End If
+    Else
+        calledAsArrayFormula = False
+    End If
+    
+    ReDim targetArray(target.Rows.Count, target.Columns.Count)
+    targetArray = target.Value
+
+    Set Dict_Freqs = New Scripting.Dictionary
+    For rowCounter = LBound(targetArray, 1) To UBound(targetArray, 1)
+        For colCounter = LBound(targetArray, 2) To UBound(targetArray, 2)
+            actualValue = targetArray(rowCounter, colCounter)
+            If actualValue <> "" Then
+                freqCount = CountIfArray(targetArray, actualValue)
+                Call clearThisValueFromArray(actualValue, targetArray)
+                
+                If Not Dict_Freqs.Exists(freqCount) Then
+                    ReDim freqArray(0)
+                    freqArray(0) = actualValue
+                    Dict_Freqs.Add _
+                        Key:=freqCount, _
+                        Item:=freqArray
+                Else
+                    freqArray = Dict_Freqs(freqCount)
+                    ReDim Preserve freqArray(UBound(freqArray) + 1)
+                    freqArray(UBound(freqArray)) = actualValue
+                    Dict_Freqs(freqCount) = freqArray
+                End If
+            End If
+        Next colCounter
+    Next rowCounter
+    
+    targetArray = target.Value
+    If rankBy = 0 Then
+        If return1D Then
+            arrayCounter = 0
+            totalItemsInDict = 0:
+            For Each oneKey In Dict_Freqs.Keys: totalItemsInDict = totalItemsInDict + UBound(Dict_Freqs(oneKey)) + 1: Next oneKey
+            If Not include1s Then
+                If Dict_Freqs.Exists(1) Then
+                    totalItemsInDict = totalItemsInDict - (UBound(Dict_Freqs(1)) + 1)
+                End If
+            End If
+            ReDim returnArray(1 To totalItemsInDict)
+            For DictKeyCounter = 1 To Dict_Freqs.Count
+                oneKey = Application.Index(Dict_Freqs.Keys, Application.Match(DictKeyCounter, RankThisArray(Dict_Freqs.Keys), 0))
+                If Not (Not include1s And oneKey = 1) Then
+                    For itemCounter = 0 To UBound(Dict_Freqs(oneKey))
+                        returnArray(arrayCounter + 1) = Dict_Freqs(oneKey)(itemCounter)
+                        arrayCounter = arrayCounter + 1
+                    Next itemCounter
+                End If
+            Next DictKeyCounter
+            freqByRank = IIf(returnCount And Not calledAsArrayFormula, UBound(returnArray), Application.Transpose(returnArray))
+        Else
+            ReDim returnArray(UBound(targetArray, 1) - 1, UBound(targetArray, 2) - 1)
+            For rowCounter = LBound(targetArray, 1) To UBound(targetArray, 1)
+                For colCounter = LBound(targetArray, 2) To UBound(targetArray, 2)
+                    returnArray(rowCounter - 1, colCounter - 1) = FreqOfThisValue(targetArray(rowCounter, colCounter))
+                Next colCounter
+            Next rowCounter
+            freqByRank = IIf(returnCount And Not calledAsArrayFormula, UBound(returnArray, 1) + 1, returnArray)
+        End If
+    Else
+        If rankBy >= 1 And rankBy <= Dict_Freqs.Count Then
+            oneKey = Application.Index(Dict_Freqs.Keys, Application.Match(rankBy, RankThisArray(Dict_Freqs.Keys), 0))
+            If Dict_Freqs.Exists(oneKey) Then
+                freqByRank = IIf(returnCount And Not calledAsArrayFormula, UBound(Dict_Freqs(oneKey)) + 1, Dict_Freqs(oneKey))
+            Else
+                ReDim returnArray(0)
+                returnArray(1) = 0
+                freqByRank = returnArray
+            End If
+        Else
+            ReDim returnArray(0)
+            returnArray(0) = 0
+            freqByRank = returnArray
+        End If
+    End If
+End Function
+Private Sub clearThisValueFromArray(ThisValue As Variant, whichArray As Variant)
+Dim colNumber As Long
+Dim rowNumber As Long
+Dim stopReplacing As Boolean
+Dim thisColumnFinished As Boolean
+Dim freqCount As Long
+    freqCount = CountIfArray(whichArray, ThisValue)
+    colNumber = 1: stopReplacing = False
+    Do
+        thisColumnFinished = False
+        Do
+            If Not IsError(Application.Match(ThisValue, _
+                                             Application.Index(whichArray, 0, colNumber) _
+                                             , 0)) _
+            Then
+                rowNumber = Application.Match(ThisValue, _
+                                              Application.Index(whichArray, 0, colNumber) _
+                                              , 0)
+                whichArray(rowNumber, colNumber) = ""
+                freqCount = freqCount - 1
+            Else
+                thisColumnFinished = True
+            End If
+        Loop Until thisColumnFinished Or freqCount = 0
+        If colNumber < UBound(whichArray, 2) Then colNumber = colNumber + 1 Else stopReplacing = True
+    Loop Until stopReplacing Or freqCount = 0
+End Sub
+Private Function FreqOfThisValue(ThisValue As Variant) As Long
+Dim DictKeyCounter As Long
+Dim valueFound As Boolean
+Dim foundFreq As Long
+    valueFound = False
+    For DictKeyCounter = 0 To Dict_Freqs.Count - 1
+        valueFound = Not IsError(Application.Match(ThisValue, Dict_Freqs(Dict_Freqs.Keys(DictKeyCounter)), 0))
+        If valueFound Then
+            foundFreq = Dict_Freqs.Keys(DictKeyCounter)
+            Exit For
+        End If
+    Next DictKeyCounter
+    FreqOfThisValue = IIf(valueFound, foundFreq, -1)
+End Function
+Private Function RankThisArray(ThisArray As Variant) As Variant
+Dim rankedArray()
+Dim arrayCounter As Long
+Dim oneItem
+Dim whatRank As Integer
+    ReDim rankedArray(1 To UBound(ThisArray) + 1)
+    For arrayCounter = LBound(ThisArray) To UBound(ThisArray)
+        whatRank = 1
+        For Each oneItem In ThisArray
+            If ThisArray(arrayCounter) < oneItem Then
+                whatRank = whatRank + 1
+            End If
+        Next oneItem
+        rankedArray(arrayCounter + 1) = whatRank
+    Next arrayCounter
+    RankThisArray = rankedArray
+End Function
+Private Function CountIfArray(targetArray As Variant, countWhat As Variant) As Long
+    CountIfArray = Application.Count(Application.Match(targetArray, Array(countWhat), 0))
+End Function
+````
+
+## 5.Releases
 There will be 3 types of releases:
 1. VBA code for UDF that could be copied from here
 2. .bas module
 3. .xlsm file
 
-## 5.The Future
+## 6.The Future
 This is a proof-of-concept tool that I developed for my own use that was shared to the public.\
 Though I tried my best to test the code as much as possible, there might hitherto yet unforeseen bugs and errors might still exist.\
 Therefore, the users are responsible for their own usage of my code if they decided to use the code thus shared and it is understood that by sharing this as an open-source code, I shall not be held liable to any mishaps stemming from using the code I shared.\
