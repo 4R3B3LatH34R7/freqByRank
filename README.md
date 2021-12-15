@@ -76,6 +76,11 @@ Since the default is set not to return the unique numbers, the users no longer h
 ### 3.6.Unintended side effect
 The ability of the UDF to return frequencies based on users' choice of ranks, we can set it like =freqByRank(A1:F16,1) to get the UNIQUE values within a dataset.
 
+### 3.7.Combining with other formulae/functions
+After the users used freqByRank with return1D set to TRUE (which is default) with the formula cell in H2, they can use =COUNTIF($B$2:$F$16,H2) will return the count of values in that column.\
+I'm sure there are other ways to combine this UDF with Excel's default formulae like MATCH and use it with this UDF to check for a cell's frequency value.\
+So, happy explorations!
+
 ## 4.Releases
 There will be 3 types of releases:
 1. VBA code for UDF that could be copied from here
