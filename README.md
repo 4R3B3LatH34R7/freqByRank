@@ -270,7 +270,8 @@ End Function
 ````
 
 ## 5.Releases
-There will be 3 types of releases:
+There are 3 types of sources for this UDF.
+First and initial release on 15DEC2021 at 18:35 MYANMAR STANDARD TIME.
 1. [VBA code for UDF](https://github.com/4R3B3LatH34R7/freqByRank#4the-udf-code)
 2. [.bas module](https://github.com/4R3B3LatH34R7/freqByRank/releases/download/v0.1a/mod_freqByRank.bas)
 3. [.xlsm file](https://github.com/4R3B3LatH34R7/freqByRank/releases/download/v0.1a/freqByRank_v0.1a.xlsm)
