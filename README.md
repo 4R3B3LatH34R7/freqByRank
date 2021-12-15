@@ -271,9 +271,9 @@ End Function
 
 ## 5.Releases
 There will be 3 types of releases:
-1. [VBA code for UDF](https://github.com/4R3B3LatH34R7/freqByRank#4the-udf-code) that could be copied from here
-2. .bas module
-3. .xlsm file
+1. [VBA code for UDF](https://github.com/4R3B3LatH34R7/freqByRank#4the-udf-code)
+2. [.bas module](https://github.com/4R3B3LatH34R7/freqByRank/releases/download/v0.1a/mod_freqByRank.bas)
+3. [.xlsm file](https://github.com/4R3B3LatH34R7/freqByRank/releases/download/v0.1a/freqByRank_v0.1a.xlsm)
 
 ## 6.The Future
 This is a proof-of-concept tool that I developed for my own use that was shared to the public.\
