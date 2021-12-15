@@ -16,7 +16,7 @@ The Mode.MULT function can return a values with same mode from a multi-modal dat
 This UDF was made to overcome all those above shortcomings of the above builtin formulae/functions.
 
 ## 2.How
-The logic behind this UDF is very simple, in that, I take in a range of cells.\
+The logic behind this UDF is very simple, in that, the UDF takes in a range of cells first.\
 Put them into an array and then find out the count of that value inside the range, save the count in a dictionary with the frequency as the key and then replace value with vbNullString in the range.\
 Then repeat the same process with the rest of the cells in the same range if they are not vbNullStrings.\
 If there are values with the same frequencies, they are appended together inside the dictionary in an array.\
