@@ -60,7 +60,8 @@ If left out like =freqByRank(B2:F16,0) or =freqByRank(B2:F16,0,,) will yield the
 Usually, if the range is large and contain many unique values, there will be many lowest ranked frequencies like 1. In this case, the number of rows in the single column 1D array will be pretty large for example, 50-ish based on the sample test dataset containing a 75 cells range. However, this could become 75 rows column based on the dataset which is the reason there is a switch to not show values with frequency 1 a.k.a unique values.\
 
 Another possible option for this argument is to turn it to FALSE resulting in a result array exactly the same in dimensions as the target array which the users can use to compare/map to the original target cell side-by-side.\
-A great thing of this feature is to be able to see the real time changes reflected in the original dataset. 
+A great thing about this feature is that now users are able to see the realtime changes made in the original dataset reflected in the extrapolated heatmap-ish region. Please refer to the following image for further references.
+![freqByRank](/images/freqByRank_ConditionalFormat.png)
 
 ### 3.5.return1s - optional - default=FALSE
 The 5th and last argument (as of 15DEC2021) is whether to return values which appear just once, in other words, with frequencies=1 or again, in other words, unique values.\
