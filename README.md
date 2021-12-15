@@ -27,6 +27,13 @@ I even go extra lengths to create a ranking function that would rank the frequen
 I didn't want to sort the arrays/dictionaries so I have created a function to translate the ranks to frequencies which are actually the keys to the processed dicitonary.
 
 ## 3.Parameters/Arguments
+There are altogether 5 possible arguments that could be passed to the UDF:
+1. [target](https://github.com/4R3B3LatH34R7/freqByRank#31target-range---required)
+2. [rankBy](https://github.com/4R3B3LatH34R7/freqByRank#32rank---optional---default1)
+3. [returnCount](https://github.com/4R3B3LatH34R7/freqByRank#33returncount---optional---defaultfalse)
+4. [return1D](https://github.com/4R3B3LatH34R7/freqByRank#34return1d---optional---defaulttrue)
+5. [return1s](https://github.com/4R3B3LatH34R7/freqByRank#35return1s---optional---defaultfalse)
+
 ### 3.1.target Range - required
 A single cell is selectable but there is no point in doing so.\
 While the ceiling is not set, since this UDF utilizes Dictionaries in VBA, there could be an issue with memory usage if a very large range were selected.\
