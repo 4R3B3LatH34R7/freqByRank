@@ -45,16 +45,18 @@ Above is true for uni-modal datasets but for multi-modal data sets, it should be
 So the question is how do we know if the dataset is uni/multi-modal?\
 Simple, we don't!, untill we actually call the UDF.\
 On Office365, which has spill feature, there is no need for Ctrl+Alt+Enter as entering normally like =freqByRank(B2:F16) alone is enough and it will return an array to the right of the formula cell if there are more than one cell with the same frequency, automagically.\
-However, on older Excel versions, users can still select a number of columns to the RIGHT of the formula cell and enter like =freqByRank(B2:F16,2) and enter as an array formula to see how many non-#N/A values are returned to check how many cells to select to be included into the array. The number 2 in this example asks the UDF to return the value(s) with the second highest frequency.\
+However, on older Excel versions, users can still select a number of columns to the RIGHT of the formula cell and enter like =freqByRank(B2:F16,2) and enter as an array formula to see how many non-#N/A values are returned to check how many cells to select to be included into the array. The number 2 in this example asks the UDF to return the value(s) with the second highest frequency.
+
 The second argument represents the Rank in that the users can ask the UDF to return the value(s) with a specific N-th ranked frequency of occurences with Rank=1 being the highest.\
 1 was actually set as the default rank so that calling =freqByRank(B2:F16) will only return the value(s) with maximum occurences within the dataset/range.\
 The important takeaway here, is that, if a particular rank was set to return, the UDF shall return it (an array if there are more than 1 values with same frequencies) horizontally.\
 On Office365, the right side of the formula cell should be clear and if not, it would cause a #Spill error.\
 In older Excel versions, the UDF will only show the left/uppermost value only, even if there are more than 1 values with the same frequency.\
-If the requested Rank value is higher than the available/possible rank values, the UDF shall return a 0. For example, if the result contains only 4 ranges of frequencies like 1, 2, 3 & 4 and if the user asked for a rank 6, like =freqByRank(B2:F16,6), it will return a 0.\
+If the requested Rank value is higher than the available/possible rank values, the UDF shall return a 0. For example, if the result contains only 4 ranges of frequencies like 1, 2, 3 & 4 and if the user asked for a rank 6, like =freqByRank(B2:F16,6), it will return a 0.
 
 If the user wishes to have the UDF return frequencies for all the cells, the UDF could be called as =freqByRank(B2:F16,0) as an ARRAY formula but in this example 96 rows in the column containing the formula cell because B2:F16 hold 16x6=96.\
 Since returning results as a 1 dimensional array was set to be the default, the UDF could be called like above.\
+Refer to the [.gif above](/images/freqByRank_HeatMap_Demo.gif) to get an idea how the Rank could be set and returned.
 
 ### 3.3.returnCount - optional - default=FALSE
 This argument determines whether to return the values with set Rank of frequencies as an array of values or the count of the values in that array.\
