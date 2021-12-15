@@ -68,9 +68,9 @@ The ability of the UDF to return frequencies based on users' choice of ranks, we
 
 ## 4.Releases
 There will be 3 types of releases:
-1.VBA code for UDF that could be copied from here
-2..bas module
-3..xlsm file
+1. VBA code for UDF that could be copied from here
+2. .bas module
+3. .xlsm file
 
 ## 5.The Future
 This is a proof-of-concept tool that I developed for my own use that was shared to the public.\
