@@ -75,7 +75,7 @@ Usually, if the range is large and contain many unique values, there will be man
 Another possible option for this argument is to turn it to FALSE resulting in a result array exactly the same in dimensions as the target array which the users can use to compare/map to the original target cell side-by-side.\
 A great thing about this feature is that now users are able to see the realtime changes made in the original dataset reflected in the extrapolated heatmap-ish region. Please refer to the following image for further references.
 ![freqByRank](/images/freqByRank_ConditionalFormat.png)
-Please note that H2:L16 must be selected while the formula in H2 was entered as an array formula with Ctrl+Shift+Enter.
+Please note that H2:L16 must be selected while the formula in H2 was entered as an array formula with Ctrl+Shift+Enter.\
 <b>NB: The same effect can be obtained with =COUNTIF($B$2:$F$16,H2) and drag right for 4 more columns and drag down 14 more rows and apply conditional formatting.</b>
 
 ### 3.5.return1s - optional - default=FALSE
