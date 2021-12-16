@@ -1,5 +1,6 @@
 # freqByRank
 Excel UDF to get Frequency of value(s) in a range of cells by Rank
+The .gif shows how to use most of the features of freqByRank UDF.
 ![freqByRank_HeatMap_Demo](/images/freqByRank_HeatMap_Demo.gif)
 The .gif above was made using Office2010 but the way to enter the UDF will vary on Office365, where there's no need to enter the result range prior to entering the formula, in other words, selecting and entering formula into H2 only is enough because of Excel365's Spill feature.\
 <b>NB: UDF entry is different on Excel versions.</b> 
