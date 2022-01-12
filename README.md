@@ -283,3 +283,24 @@ This is a proof-of-concept tool that I developed for my own use that was shared 
 Though I tried my best to test the code as much as possible, there might hitherto yet unforeseen bugs and errors might still exist.\
 Therefore, the users are responsible for their own usage of my code if they decided to use the code thus shared and it is understood that by sharing this as an open-source code, I shall not be held liable to any mishaps stemming from using the code I shared.\
 However, the users are welcome to share their opinion and report bugs using the Discusssions and can also send emails to me at the emailaddress that was shared on my GitHub profile.
+
+***
+## License
+I don't actually like/want/wish to apply CC BY-SA license to what I share, really!\
+However, there exists some jerks in this world who thought it's ok to derive my work without proper accreditation.\
+I don't care much for fame nor finance but a little credit for the many hours of my limited life I spent on a project is appreciated.\
+Shield: [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
+
+This work is licensed under a
+[Creative Commons Attribution-ShareAlike 4.0 International License][cc-by-sa].
+
+[![CC BY-SA 4.0][cc-by-sa-image]][cc-by-sa]
+
+[cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
+[cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
+[cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
+***
+
+ <a href="https://trackgit.com">
+<img src="https://us-central1-trackgit-analytics.cloudfunctions.net/token/ping/knlqwk4f5p3jdsdf2q4k" alt="trackgit-views" />
+</a>
